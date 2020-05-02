@@ -28,7 +28,6 @@ const options = {
 const url = process.env.APP_URL || 'https://aipaints.herokuapp.com:443';
 const bot = new TelegramBot(TOKEN, options);
 
-
 // This informs the Telegram servers of the new webhook.
 // Note: we do not need to pass in the cert, as it already provided
 bot.setWebHook(`${url}/bot${TOKEN}`);
