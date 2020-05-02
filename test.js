@@ -118,7 +118,7 @@ class abstractANN {
       // console.log(this.numBatches)
       this.numBatches =  10;
       this.generateWeights()
-      this.magnitude1 = tf.scalar('0.4', 'float32');
+      this.magnitude1 = tf.scalar('1.4', 'float32');
       this.magnitude2 = tf.scalar('0.8', 'float32');
       this.magnitude3 = tf.scalar('0.75', 'float32');
       this.tMagnitude = tf.scalar(1.2);
@@ -132,7 +132,7 @@ class abstractANN {
           'tanh': (input) => input.tanh(),
           'lin': (input) => input
       };
-      this.activation1 = this.ACTIVATION["sin"];
+      this.activation1 = this.ACTIVATION["tanh"];
       this.activation2 = this.ACTIVATION["cos"];
       this.activation3 = this.ACTIVATION["tanh"];
       this.activation4 = this.ACTIVATION["sin"];
@@ -215,14 +215,14 @@ deepai.setApiKey('d445b643-fb85-4816-ac2d-95a0e660fe81');
 
 (async function() {
     var resp = await deepai.callStandardApi("deepdream", {
-            image: fs.createReadStream("./test.png"),
+            image: fs.createReadStream("./test1.png"),
     });
     //console.log(resp.output_url);
     url = resp.output_url;
     (async function() {
         var resp = await deepai.callStandardApi("CNNMRF", {
                 content: url,
-                style: fs.createReadStream("./alarm8.png"),
+                style: fs.createReadStream("./alarm8.jpg"),
         });
         console.log(resp);
     })()
