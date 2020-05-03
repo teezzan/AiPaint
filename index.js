@@ -124,3 +124,8 @@ bot.onText(/\/enroll/, (msg) => {
   // console.log(idlist)
   bot.sendMessage(msg.chat.id, `Now, you will receive daily update of my paintings. `);}
 });
+
+bot.onText(/\/start/, (msg) => {
+
+  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, use \/getpic to fetch randomly generated pictures. `);
+});
