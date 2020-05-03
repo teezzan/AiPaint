@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const request = require('request');
-
+var abstract = require('./patternGen');
 
 //const port = process.env.PORT || 3000;
 const deepai = require('deepai');
@@ -42,7 +42,7 @@ var url2 = "";
 var urllink = `https://archillect.com/${randomint(1000, 30082)}`;
 var imglink = "";
 var master="";
-
+var cppn = abstract.cppn;
 // console.log(urllink);
 
 function randomint(min, max) {
@@ -138,3 +138,13 @@ bot.onText(/\/starxz/, (msg) => {
   master = msg.chat.id;
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
 });
+
+bot.onText(/\/cppn/, (msg) => {
+  
+  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+  cppn.saveHighResFrame("c1");
+  const buffer = fs.createReadStream("./c1.png");
+  bot.sendPhoto(master, buffer);
+});
+
+
