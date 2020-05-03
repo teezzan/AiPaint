@@ -135,16 +135,21 @@ bot.onText(/\/start/, (msg) => {
 });
 
 bot.onText(/\/starxz/, (msg) => {
-  master = msg.chat.id;
+  //master = msg.chat.id;
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
+  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+  
+  const buffer = fs.createReadStream("./cppn1.png");
+  bot.sendPhoto(msg.chat.id, buffer);
 });
 
 bot.onText(/\/cppn/, (msg) => {
   
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+  
   cppn.saveHighResFrame("c1");
   const buffer = fs.createReadStream("./c1.png");
-  bot.sendPhoto(master, buffer);
+  bot.sendPhoto(msg.chat.id, buffer);
 });
 
 
