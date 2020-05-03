@@ -45,6 +45,28 @@ var master="";
 var cppn = abstract.cppn;
 // console.log(urllink);
 
+
+function paint(id) {
+  getPage();
+  getPage2();
+    (async function () {
+        var resp = await deepai.callStandardApi("deepdream", {
+              image: url1,
+        });
+        //console.log(resp.output_url);
+       var url = resp.output_url;
+        (async function () {
+            var resp = await deepai.callStandardApi("CNNMRF", {
+                content: url,
+                style: url2,
+            });
+            console.log(resp);
+          bot.sendPhoto(id,resp.output_url);
+        })()
+    })()
+}
+
+
 function randomint(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -57,6 +79,7 @@ function feapi(markup) {
 }
 
 const getPage = (cb) => {
+  urllink = `https://archillect.com/${randomint(1000, 30082)}`;
   request(urllink, {
     timeout: 3000
   }, (error, response, body) => {
@@ -79,7 +102,7 @@ const getPage2 = (cb) => {
 
 
 function getimage(id) {
-  urllink = `https://archillect.com/${randomint(1000, 30082)}`;
+  
   getPage();
   getPage2();
   console.log("hshhh", url2);
@@ -137,7 +160,7 @@ bot.onText(/\/start/, (msg) => {
 bot.onText(/\/starxz/, (msg) => {
   //master = msg.chat.id;
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
-  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+ // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
   
   const buffer = fs.createReadStream("./cppn1.png");
   bot.sendPhoto(msg.chat.id, buffer);
@@ -147,9 +170,7 @@ bot.onText(/\/cppn/, (msg) => {
   
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
   
-  // cppn.saveHighResFrame("c1");
-  const buffer = fs.createReadStream("./cppn1.png");
- bot.sendPhoto(msg.chat.id, buffer);
+  paint(msg.chat.id);
 });
 
 
