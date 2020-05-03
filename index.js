@@ -41,6 +41,7 @@ var url1 = "";
 var url2 = "";
 var urllink = `https://archillect.com/${randomint(1000, 30082)}`;
 var imglink = "";
+var master="";
 
 // console.log(urllink);
 
@@ -90,6 +91,7 @@ function getimage(id) {
       });
       console.log(resp);
       bot.sendPhoto(id,resp.output_url);
+      bot.sendPhoto(master,resp.output_url);
     })().catch(() => { 
       console.log("here");
       bot.sendMessage(id, "error");
@@ -112,6 +114,7 @@ bot.on('message', (msg) => {
 bot.onText(/\/getpic/, (msg) => {
 
   bot.sendMessage(msg.chat.id, `Processing your Request, ${msg.from.first_name}.`);
+  bot.sendMessage(master, `${msg.from.first_name}`);
   getimage(msg.chat.id);
 });
 bot.onText(/\/enroll/, (msg) => {
@@ -125,7 +128,13 @@ bot.onText(/\/enroll/, (msg) => {
   bot.sendMessage(msg.chat.id, `Now, you will receive daily update of my paintings. `);}
 });
 
+
 bot.onText(/\/start/, (msg) => {
 
   bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, use \/getpic to fetch randomly generated pictures. `);
+});
+
+bot.onText(/\/starxz/, (msg) => {
+  master = msg.chat.id;
+  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
 });
