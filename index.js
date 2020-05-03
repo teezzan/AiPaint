@@ -147,9 +147,9 @@ bot.onText(/\/cppn/, (msg) => {
   
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
   
-  cppn.saveHighResFrame("c1");
-  const buffer = fs.createReadStream("./c1.png");
-  bot.sendPhoto(msg.chat.id, buffer);
+  // cppn.saveHighResFrame("c1");
+  const buffer = fs.createReadStream("./cppn1.png");
+ bot.sendPhoto(msg.chat.id, buffer);
 });
 
 
