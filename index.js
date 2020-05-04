@@ -57,8 +57,8 @@ function paint(id) {
        var url = resp.output_url;
         (async function () {
             var resp = await deepai.callStandardApi("CNNMRF", {
-                content: "https://source.unsplash.com/random",
-                style: "https://source.unsplash.com/random",
+                content: "https://source.unsplash.com/random/2048*760",
+                style: "https://source.unsplash.com/random/2048*760",
             });
             console.log(resp);
           bot.sendPhoto(id,resp.output_url);
@@ -110,8 +110,8 @@ function getimage(id) {
   setTimeout(() => {
     (async function () {
       var resp = await deepai.callStandardApi("CNNMRF", {
-        content: url1,
-        style: url2, // fs.createReadStream("./img.png"),
+        content: url2,
+        style: url1, // fs.createReadStream("./img.png"),
       });
       console.log(resp);
       bot.sendPhoto(id,resp.output_url);
