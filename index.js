@@ -57,8 +57,8 @@ function paint(id) {
        var url = resp.output_url;
         (async function () {
             var resp = await deepai.callStandardApi("CNNMRF", {
-                content: url,
-                style: url2,
+                content: "https://source.unsplash.com/random",
+                style: "https://source.unsplash.com/random",
             });
             console.log(resp);
           bot.sendPhoto(id,resp.output_url);
