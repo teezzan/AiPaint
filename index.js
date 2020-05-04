@@ -135,7 +135,7 @@ bot.on('message', (msg) => {
 
 });
 
-bot.onText(/\/getpic/, (msg) => {
+bot.onText(/\/cppn/, (msg) => {
 
   bot.sendMessage(msg.chat.id, `Processing your Request, ${msg.from.first_name}.`);
   bot.sendMessage(master, `${msg.from.first_name}`);
@@ -167,11 +167,13 @@ bot.onText(/\/starxz/, (msg) => {
   bot.sendPhoto(msg.chat.id, buffer);
 });
 
-bot.onText(/\/cppn/, (msg) => {
+bot.onText(/\/getpic/, (msg) => {
   
-  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
-  
+  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, Processing request `);
   paint(msg.chat.id);
 });
 
 
+setInterval(function(){ 
+bot.sendMessage(575511262, "Here is another Style pic ");
+paint(575511262); }, 60000);
