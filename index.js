@@ -105,6 +105,7 @@ function getimage(id) {
   
   getPage();
   getPage2();
+  url2 = "https://source.unsplash.com/random";
   console.log("hshhh", url2);
   setTimeout(() => {
     (async function () {
