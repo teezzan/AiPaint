@@ -175,5 +175,5 @@ bot.onText(/\/getpic/, (msg) => {
 
 
 setInterval(function(){ 
-bot.sendMessage(575511262, "Here is another Style pic ");
-paint(575511262); }, 60000);
+bot.sendMessage(575511262, "Here is another Pic. Share if you like");
+paint(575511262); }, 900000);
