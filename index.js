@@ -21,7 +21,7 @@ const TOKEN = process.env.TELEGRAM_TOKEN || '1193764845:AAGmeN1Oekg4u8fgqUHf3jeW
 const options = {
   webHook: {
     port: process.env.PORT
-    }
+  }
 };
 
 
@@ -36,12 +36,12 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 
 
 
-var idlist =[];
+var idlist = [];
 var url1 = "";
 var url2 = "";
 var urllink = `https://archillect.com/${randomint(1000, 30082)}`;
 var imglink = "";
-var master="";
+var master = "";
 var cppn = abstract.cppn;
 // console.log(urllink);
 
@@ -49,21 +49,21 @@ var cppn = abstract.cppn;
 function paint(id) {
   getPage();
   getPage2();
+  (async function () {
+    var resp = await deepai.callStandardApi("deepdream", {
+      image: url1,
+    });
+    //console.log(resp.output_url);
+    var url = resp.output_url;
     (async function () {
-        var resp = await deepai.callStandardApi("deepdream", {
-              image: url1,
-        });
-        //console.log(resp.output_url);
-       var url = resp.output_url;
-        (async function () {
-            var resp = await deepai.callStandardApi("CNNMRF", {
-                content: "https://source.unsplash.com/random/2048*760",
-                style: "https://source.unsplash.com/random/2048*760",
-            });
-            console.log(resp);
-          bot.sendPhoto(id,resp.output_url);
-        })()
+      var resp = await deepai.callStandardApi("CNNMRF", {
+        content: "https://source.unsplash.com/random/2048*760",
+        style: "https://source.unsplash.com/random/2048*760",
+      });
+      console.log(resp);
+      bot.sendPhoto(id, resp.output_url);
     })()
+  })()
 }
 
 
@@ -102,7 +102,7 @@ const getPage2 = (cb) => {
 
 
 function getimage(id) {
-  
+
   getPage();
   getPage2();
   url2 = "https://source.unsplash.com/random";
@@ -114,16 +114,50 @@ function getimage(id) {
         style: url1, // fs.createReadStream("./img.png"),
       });
       console.log(resp);
-      bot.sendPhoto(id,resp.output_url);
-      bot.sendPhoto(master,resp.output_url);
-    })().catch(() => { 
+      bot.sendPhoto(id, resp.output_url);
+      bot.sendPhoto(master, resp.output_url);
+    })().catch(() => {
       console.log("here");
       bot.sendMessage(id, "error");
 
-   })
+    })
   }, 7000);
 }
 
+
+//sendToGrid("http://localhost:3000","kitt", "test1.png");
+function sendToGrid(url, name, image) {
+  var fs = require("fs");
+  var request = require("request");
+
+  var options = {
+    method: 'POST',
+    url: `${url}/api/artwork/upload`,
+    headers:
+    {
+      'postman-token': '6fcc56a0-bf47-a756-c0a4-3030c8e5d2dc',
+      'cache-control': 'no-cache',
+      'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+    },
+    formData:
+    {
+      file:
+      {
+        value: fs.createReadStream(`${image}`),
+        options: { filename: `${image}`, contentType: null }
+      },
+      name: name
+    }
+  };
+ var code =0;
+  request(options, function (error, response, body) {
+    if (error) throw new Error(error);
+
+    console.log(response.statusCode);
+    code = response.statusCode;
+  });
+return code;
+}
 
 
 bot.on('message', (msg) => {
@@ -142,14 +176,15 @@ bot.onText(/\/getpic/, (msg) => {
   getimage(msg.chat.id);
 });
 bot.onText(/\/enroll/, (msg) => {
-  if(idlist.includes(msg.chat.id)){
+  if (idlist.includes(msg.chat.id)) {
     bot.sendMessage(msg.chat.id, `Your are already a subscriber`);
   }
-  else{
-  bot.sendMessage(msg.chat.id, `Processing your Request, ${msg.from.first_name}.`);
-  idlist.push(msg.chat.id);
-  // console.log(idlist)
-  bot.sendMessage(msg.chat.id, `Now, you will receive daily update of my paintings. `);}
+  else {
+    bot.sendMessage(msg.chat.id, `Processing your Request, ${msg.from.first_name}.`);
+    idlist.push(msg.chat.id);
+    // console.log(idlist)
+    bot.sendMessage(msg.chat.id, `Now, you will receive daily update of my paintings. `);
+  }
 });
 
 
@@ -161,19 +196,25 @@ bot.onText(/\/start/, (msg) => {
 bot.onText(/\/starxz/, (msg) => {
   //master = msg.chat.id;
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
- // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
-  
+  // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+
   const buffer = fs.createReadStream("./cppn1.png");
   bot.sendPhoto(msg.chat.id, buffer);
 });
 
 bot.onText(/\/cppn/, (msg) => {
-  
+
   bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, Processing request `);
   paint(msg.chat.id);
 });
 
+bot.onText(/\/send/, (msg) => {
 
-setInterval(function(){ 
-bot.sendMessage(575511262, "Here is another Pic. Share if you like");
-paint(575511262); }, 900000);
+  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, Processing request `);
+  sendToGrid("http://localhost:3000",randomint(5010010,100001000).toString(), "test1.png");
+});
+
+setInterval(function () {
+  bot.sendMessage(575511262, "Here is another Pic. Share if you like");
+  paint(575511262);
+}, 900000);

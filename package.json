@@ -21,6 +21,7 @@
     "graceful-fs": "^4.2.4",
     "jsdom": "^16.2.2",
     "node-telegram-bot-api": "^0.40.0",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sulla": "^2.3.14"
   }
 }

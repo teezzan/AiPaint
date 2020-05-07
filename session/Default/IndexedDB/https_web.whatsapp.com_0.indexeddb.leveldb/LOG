@@ -1,0 +1,6 @@
+2020/05/03-21:50:48.295 55ea Reusing MANIFEST /home/gal3li0/Documents/Apis/aipaint/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2020/05/03-21:50:48.295 55ea Recovering log #3
+2020/05/03-21:50:48.781 55ea Reusing old log /home/gal3li0/Documents/Apis/aipaint/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000003.log 
+2020/05/03-21:50:49.935 5782 Level-0 table #5: started
+2020/05/03-21:50:50.207 5782 Level-0 table #5: 1195857 bytes OK
+2020/05/03-21:50:50.247 5782 Delete type=0 #3
