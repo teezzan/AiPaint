@@ -5,6 +5,11 @@ const tf = require('@tensorflow/tfjs');
 const deepai = require('deepai');
 deepai.setApiKey('d445b643-fb85-4816-ac2d-95a0e660fe81');
 
+
+
+function randomint(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
 class abstractANN {
     constructor({ canvasID } = {}) {
 
@@ -47,24 +52,28 @@ class abstractANN {
         this.w2 = tf.randomNormal([this.H, this.H]);
         this.w3 = tf.randomNormal([this.H, this.H]);
         this.w4 = tf.randomNormal([this.H, 3]); // 3 outputs (rgb)
-        this.magnitude1 = tf.scalar('0.4', 'float32');
-        this.magnitude2 = tf.scalar('0.8', 'float32');
-        this.magnitude3 = tf.scalar('0.75', 'float32');
+        this.magnitude1 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
+        this.magnitude2 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
+        this.magnitude3 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
+
         this.tMagnitude = tf.scalar(1.2);
         this.t = 0;
-        this.mouseY = 0.3;
-        this.mouseX = 0.03;
+        this.mouseY = randomint(0,3200)/1000;
+        this.mouseX = randomint(0,3200)/1000;
 
         this.ACTIVATION = {
             'cos': (input) => input.cos(),
             'sin': (input) => input.sin(),
             'tanh': (input) => input.tanh(),
-            'lin': (input) => input
+            'lin': (input) => input,
+            'cosh': (input) => input.cosh(),
+            'sinh': (input) => input.sinh(),
         };
-        this.activation1 = this.ACTIVATION["sin"];
-        this.activation2 = this.ACTIVATION["cos"];
-        this.activation3 = this.ACTIVATION["tanh"];
-        this.activation4 = this.ACTIVATION["sin"];
+        var formular = ["sin", "cos", "tanh", "lin", "cosh", "sinh"];
+        this.activation1 = this.ACTIVATION[formular[randomint(0,5)]];
+        this.activation2 = this.ACTIVATION[formular[randomint(0,5)]];
+        this.activation3 = this.ACTIVATION[formular[randomint(0,5)]];
+        this.activation4 = this.ACTIVATION[formular[randomint(0,5)]];
 
 
 
@@ -98,9 +107,13 @@ class abstractANN {
 
 
     start() {
+        this.inputTensorXY.dispose();
+        this.w1.dispose();
+        this.w2.dispose();
+        this.w3.dispose();
+        this.w4.dispose();
         this.generateInputs();
         this.generateWeights();
-        this.runFlag = true;
 
     }
 
@@ -120,13 +133,15 @@ class abstractANN {
         // console.log(this.numBatches)
         this.numBatches = 10;
         this.generateWeights()
-        this.magnitude1 = tf.scalar('1.4', 'float32');
-        this.magnitude2 = tf.scalar('0.8', 'float32');
-        this.magnitude3 = tf.scalar('0.75', 'float32');
+        this.magnitude1 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
+        this.magnitude2 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
+        this.magnitude3 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
+
         this.tMagnitude = tf.scalar(1.2);
         this.t = 0;
-        this.mouseY = 0.3;
-        this.mouseX = 0.03;
+        
+        this.mouseY = randomint(0,3200)/1000;
+        this.mouseX = randomint(0,3200)/1000;
 
         this.ACTIVATION = {
             'cos': (input) => input.cos(),
@@ -134,10 +149,11 @@ class abstractANN {
             'tanh': (input) => input.tanh(),
             'lin': (input) => input
         };
-        this.activation1 = this.ACTIVATION["tanh"];
-        this.activation2 = this.ACTIVATION["cos"];
-        this.activation3 = this.ACTIVATION["tanh"];
-        this.activation4 = this.ACTIVATION["sin"];
+        var formular = ["sin", "cos", "tanh", "lin"];
+        this.activation1 = this.ACTIVATION[formular[randomint(0,3)]];
+        this.activation2 = this.ACTIVATION[formular[randomint(0,3)]];
+        this.activation3 = this.ACTIVATION[formular[randomint(0,3)]];
+        this.activation4 = this.ACTIVATION[formular[randomint(0,3)]];
 
 
     }
@@ -226,7 +242,7 @@ function paint(img, style) {
 cppn = new abstractANN({
     canvasID: 'canvas'
 });
-// cppn.saveHighResFrame("cppn1.png");
+// cppn.saveHighResFrame("cppn1");
 // var url = "";
 
 // paint("cppn1.png", "art_Style.png");

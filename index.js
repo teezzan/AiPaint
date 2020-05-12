@@ -16,7 +16,7 @@ const TelegramBot = require('node-telegram-bot-api');
 //const TOKEN = process.env.TELEGRAM_TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
 
 const TOKEN = process.env.TELEGRAM_TOKEN || '1193764845:AAGmeN1Oekg4u8fgqUHf3jeWLwY56b0-OAo';
-//const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(TOKEN, { polling: true });
 
 const options = {
   webHook: {
@@ -26,7 +26,7 @@ const options = {
 
 
 const url = process.env.APP_URL || 'https://aipaints.herokuapp.com:443';
-const bot = new TelegramBot(TOKEN, options);
+// const bot = new TelegramBot(TOKEN, options);
 
 // This informs the Telegram servers of the new webhook.
 // Note: we do not need to pass in the cert, as it already provided
