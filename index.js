@@ -105,13 +105,14 @@ function getimage(id) {
 
   getPage();
   getPage2();
-  url2 = "https://source.unsplash.com/random";
+  url2 = "https://source.unsplash.com/random/?space";
+  url1 = "https://source.unsplash.com/1600x900/?nature,water";
   console.log("hshhh", url2);
   setTimeout(() => {
     (async function () {
       var resp = await deepai.callStandardApi("CNNMRF", {
-        content: url2,
-        style: url1, // fs.createReadStream("./img.png"),
+        content: url1,
+        style: url2, // fs.createReadStream("./img.png"),
       });
       console.log(resp);
       bot.sendPhoto(id, resp.output_url);
