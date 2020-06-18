@@ -11,7 +11,7 @@ function randomint(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 class abstractANN {
-    constructor({ canvasID } = {}) {
+    constructor({ canvasID, height, width } = {}) {
 
         tf.enableProdMode();
 
@@ -36,8 +36,11 @@ class abstractANN {
         //this.lMagnitude = tf.scalar(1);
 
         // create hidden canvas to generate wallpaper and convert to image
-        this.HIDDENWIDTH = 1920;
-        this.HIDDENHEIGHT = 1080;
+        // this.HIDDENWIDTH = 1920;
+        // this.HIDDENHEIGHT = 1080;
+        console.log("height ", height);
+        this.HIDDENWIDTH = height;
+        this.HIDDENHEIGHT = width;
         this.hiddenCanvas = createCanvas(this.HIDDENWIDTH, this.HIDDENHEIGHT)
 
         // this.hiddenCanvas.width = this.HIDDENWIDTH;
@@ -167,7 +170,8 @@ class abstractANN {
         this.runFlag = false;
         this.generateInputs();
         this.genfixed();
-
+        console.log(this.height);
+        
 
         // // generate matrix of all (x,y) combinations
         for (let batch = 0; batch < this.HIDDENHEIGHT / this.numBatches; batch++) {
@@ -214,7 +218,7 @@ class abstractANN {
         // let image = document.createElement('img');
         // var image = this.hiddenCanvas.toDataURL("image/jpeg");
         const buffer = this.hiddenCanvas.toBuffer('image/png')
-        fs.writeFileSync(`./${name}.png`, buffer)
+        fs.writeFileSync(`${name}`, buffer)
         // resume running
         this.runFlag = true;
     }
@@ -239,15 +243,13 @@ function paint(img, style) {
     })()
 }
 
-cppn = new abstractANN({
-    canvasID: 'canvas'
-});
-// cppn.saveHighResFrame("cppn1");
-// var url = "";
+// cppn = new abstractANN({
+//     canvasID: 'canvas',
+//     height: 320,
+//     width: 240
+// });
+// // cppn.saveHighResFrame("cppn1");
+// // var url = "";
 
-// paint("cppn1.png", "art_Style.png");
-
-module.exports = {
-    cppn: cppn,
-    paint: paint
-}
+// // paint("cppn1.png", "art_Style.png");
+module.exports = abstractANN;

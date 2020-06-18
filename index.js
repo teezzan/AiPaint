@@ -26,6 +26,7 @@ const options = {
 
 
 const url = process.env.APP_URL || 'https://aipaints.herokuapp.com:443';
+
 const bot = new TelegramBot(TOKEN, options);
 
 // This informs the Telegram servers of the new webhook.
@@ -42,7 +43,7 @@ var url2 = "";
 var urllink = `https://archillect.com/${randomint(1000, 30082)}`;
 var imglink = "";
 var master = "";
-var cppn = abstract.cppn;
+
 // console.log(urllink);
 
 
@@ -150,14 +151,14 @@ function sendToGrid(url, name, image) {
       name: name
     }
   };
- var code =0;
+  var code = 0;
   request(options, function (error, response, body) {
     if (error) throw new Error(error);
 
     console.log(response.statusCode);
     code = response.statusCode;
   });
-return code;
+  return code;
 }
 
 
@@ -194,12 +195,18 @@ bot.onText(/\/start/, (msg) => {
   bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, use \/getpic to fetch randomly generated pictures. `);
 });
 
-bot.onText(/\/starxz/, (msg) => {
+bot.onText(/\/make/, (msg) => {
   //master = msg.chat.id;
-  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, you're master `);
-  // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
 
   const buffer = fs.createReadStream("./cppn1.png");
+  cppn = new abstract({
+    canvasID: 'canvas',
+    height: 320,
+    width: 240
+  });
+  cppn.saveHighResFrame("./new.png");
+  const buffer = fs.createReadStream("./new.png");
   bot.sendPhoto(msg.chat.id, buffer);
 });
 
@@ -212,7 +219,7 @@ bot.onText(/\/cppn/, (msg) => {
 bot.onText(/\/send/, (msg) => {
 
   bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, Processing request `);
-  sendToGrid("http://localhost:3000",randomint(5010010,100001000).toString(), "test1.png");
+  sendToGrid("http://localhost:3000", randomint(5010010, 100001000).toString(), "test1.png");
 });
 
 setInterval(function () {
