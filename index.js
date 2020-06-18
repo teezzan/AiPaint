@@ -170,7 +170,7 @@ bot.on('message', (msg) => {
   }
   else{
     try{
-      bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+     // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
       var prop = JSON.parse(msg.text);
       cppn = new abstract({
         canvasID: 'canvas',
