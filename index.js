@@ -174,8 +174,8 @@ bot.on('message', (msg) => {
       var prop = JSON.parse(msg.text);
       cppn = new abstract({
         canvasID: 'canvas',
-        height: prop.height,
-        width: prop.width
+        width: prop.height<=1024?prop.height:1024,
+        height: prop.width<=1024?prop.width:1024
       });
       cppn.saveHighResFrame("./new.png");
       const buffer = fs.createReadStream("./new.png");
@@ -208,12 +208,12 @@ bot.onText(/\/enroll/, (msg) => {
 
 bot.onText(/\/start/, (msg) => {
 
-  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, use \/getpic to fetch randomly generated pictures. `);
+  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, use \/make to fetch randomly generated cppn Abstract art or send a JSON with format {"width" :1040, "height" :1040} for custom resolution.. `);
 });
 
 bot.onText(/\/make/, (msg) => {
   //master = msg.chat.id;
-  bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+  //bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
 
   cppn = new abstract({
     canvasID: 'canvas',
