@@ -174,15 +174,14 @@ bot.on('message', (msg) => {
       var prop = JSON.parse(msg.text);
       cppn = new abstract({
         canvasID: 'canvas',
-        height: 320,
-        width: 240
+        height: prop.height,
+        width: prop.width
       });
       cppn.saveHighResFrame("./new.png");
       const buffer = fs.createReadStream("./new.png");
       bot.sendPhoto(msg.chat.id, buffer);
     }
     catch {
-      bot.sendMessage(msg.chat.id, "Error");
     }
   }
 
@@ -218,8 +217,8 @@ bot.onText(/\/make/, (msg) => {
 
   cppn = new abstract({
     canvasID: 'canvas',
-    height: 320,
-    width: 240
+    height: 1080,
+    width: 720
   });
   cppn.saveHighResFrame("./new.png");
   const buffer = fs.createReadStream("./new.png");
