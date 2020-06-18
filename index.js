@@ -163,10 +163,27 @@ function sendToGrid(url, name, image) {
 
 
 bot.on('message', (msg) => {
-
+  var prop = {};
   var Hi = "hi";
   if (msg.text.toString().toLowerCase().indexOf(Hi) === 0) {
     bot.sendMessage(msg.chat.id, "Hello dear user");
+  }
+  else{
+    try{
+      bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+      var prop = JSON.parse(msg.text);
+      cppn = new abstract({
+        canvasID: 'canvas',
+        height: 320,
+        width: 240
+      });
+      cppn.saveHighResFrame("./new.png");
+      const buffer = fs.createReadStream("./new.png");
+      bot.sendPhoto(msg.chat.id, buffer);
+    }
+    catch {
+      bot.sendMessage(msg.chat.id, "Error");
+    }
   }
 
 });
@@ -199,7 +216,6 @@ bot.onText(/\/make/, (msg) => {
   //master = msg.chat.id;
   bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
 
-  const buffer = fs.createReadStream("./cppn1.png");
   cppn = new abstract({
     canvasID: 'canvas',
     height: 320,
