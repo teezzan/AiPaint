@@ -180,6 +180,7 @@ bot.on('message', (msg) => {
       cppn.saveHighResFrame("./new.png");
       const buffer = fs.createReadStream("./new.png");
       bot.sendPhoto(msg.chat.id, buffer);
+     bot.sendPhoto(master, buffer);
     }
     catch {
     }
@@ -223,11 +224,12 @@ bot.onText(/\/make/, (msg) => {
   cppn.saveHighResFrame("./new.png");
   const buffer = fs.createReadStream("./new.png");
   bot.sendPhoto(msg.chat.id, buffer);
+bot.sendPhoto(master, buffer);
 });
 
 bot.onText(/\/cppn/, (msg) => {
-
-  bot.sendMessage(msg.chat.id, `Dear ${msg.from.first_name}, Processing request `);
+  master = msg.chat.id;
+  bot.sendMessage(msg.chat.id, `Dear Master ${msg.from.first_name}, Processing request `);
   paint(msg.chat.id);
 });
 
@@ -237,7 +239,7 @@ bot.onText(/\/send/, (msg) => {
   sendToGrid("http://localhost:3000", randomint(5010010, 100001000).toString(), "test1.png");
 });
 
-setInterval(function () {
-  bot.sendMessage(575511262, "Here is another Pic. Share if you like");
-  paint(575511262);
-}, 900000);
+//setInterval(function () {
+//  bot.sendMessage(575511262, "Here is another Pic. Share if you like");
+ // paint(575511262);
+//}, 900000);
