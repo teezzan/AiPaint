@@ -170,12 +170,15 @@ bot.on('message', (msg) => {
   }
   else{
     try{
-     // bot.sendMessage(msg.chat.id, `Dear ${msg.chat.id}, cppn coming `);
+     bot.sendMessage(msg.chat.id, `Dear User, Processing your request  `);
       var prop = JSON.parse(msg.text);
+      var hei= prop.height<=1024?prop.height:1024;
+      var wei = prop.width<=1024?prop.width:1024;
+      console.log(wei, 'x', hei);
       cppn = new abstract({
         canvasID: 'canvas',
-        width: prop.height<=1024?prop.height:1024,
-        height: prop.width<=1024?prop.width:1024
+        width: hei,
+        height: wei
       });
       cppn.saveHighResFrame("./new.png");
       const buffer = fs.createReadStream("./new.png");
