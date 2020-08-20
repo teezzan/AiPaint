@@ -13,7 +13,7 @@
   "dependencies": {
     "@applitools/jsdom": "^1.0.2",
     "@tensorflow/tfjs-node": "^1.7.4",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "canvas": "^2.6.1",
     "cloudinary": "^1.21.0",
     "deepai": "^1.0.15",
