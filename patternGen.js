@@ -9,7 +9,7 @@ deepai.setApiKey('d445b643-fb85-4816-ac2d-95a0e660fe81');
 
 function randomint(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+}
 class abstractANN {
     constructor({ canvasID, height, width } = {}) {
 
@@ -36,33 +36,26 @@ class abstractANN {
         //this.lMagnitude = tf.scalar(1);
 
         // create hidden canvas to generate wallpaper and convert to image
-        // this.HIDDENWIDTH = 1920;
-        // this.HIDDENHEIGHT = 1080;
-        console.log("height ", height);
         this.HIDDENWIDTH = height;
         this.HIDDENHEIGHT = width;
         this.hiddenCanvas = createCanvas(this.HIDDENWIDTH, this.HIDDENHEIGHT)
-
-        // this.hiddenCanvas.width = this.HIDDENWIDTH;
-        // this.hiddenCanvas.height = this.HIDDENHEIGHT;
         this.ctx = this.hiddenCanvas.getContext('2d');
 
-        // the wallpaper is pretty high-res, so we'll generate the image batch-by-batch
         // number of batches
         this.numBatches = 10;
         // initialize random weights
-        this.w1 = tf.randomNormal([5, this.H]); // x, y + mouse.x, mouse.y + 1 temporal input
+        this.w1 = tf.randomNormal([5, this.H]);
         this.w2 = tf.randomNormal([this.H, this.H]);
         this.w3 = tf.randomNormal([this.H, this.H]);
         this.w4 = tf.randomNormal([this.H, 3]); // 3 outputs (rgb)
-        this.magnitude1 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
-        this.magnitude2 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
-        this.magnitude3 = tf.scalar(`${randomint(1000,6200)/1000}`, 'float32');
+        this.magnitude1 = tf.scalar(`${randomint(1000, 6200) / 1000}`, 'float32');
+        this.magnitude2 = tf.scalar(`${randomint(1000, 6200) / 1000}`, 'float32');
+        this.magnitude3 = tf.scalar(`${randomint(1000, 6200) / 1000}`, 'float32');
 
         this.tMagnitude = tf.scalar(1.2);
         this.t = 0;
-        this.mouseY = randomint(0,3200)/1000;
-        this.mouseX = randomint(0,3200)/1000;
+        this.mouseY = randomint(0, 3200) / 1000;
+        this.mouseX = randomint(0, 3200) / 1000;
 
         this.ACTIVATION = {
             'cos': (input) => input.cos(),
@@ -73,16 +66,10 @@ class abstractANN {
             'sinh': (input) => input.sinh(),
         };
         var formular = ["sin", "cos", "tanh", "lin", "cosh", "sinh"];
-        this.activation1 = this.ACTIVATION[formular[randomint(0,5)]];
-        this.activation2 = this.ACTIVATION[formular[randomint(0,5)]];
-        this.activation3 = this.ACTIVATION[formular[randomint(0,5)]];
-        this.activation4 = this.ACTIVATION[formular[randomint(0,5)]];
-
-
-
-
-
-
+        this.activation1 = this.ACTIVATION[formular[randomint(0, 5)]];
+        this.activation2 = this.ACTIVATION[formular[randomint(0, 5)]];
+        this.activation3 = this.ACTIVATION[formular[randomint(0, 5)]];
+        this.activation4 = this.ACTIVATION[formular[randomint(0, 5)]];
 
         // run flag
         this.runFlag = false;
@@ -94,7 +81,7 @@ class abstractANN {
         // generate matrix of all (x,y) combinations
         for (let i = 0; i < this.WIDTH; i++) {
             for (let j = 0; j < this.WIDTH; j++) {
-                this.input.push([i / this.WIDTH, j / this.WIDTH]); //i*j/width/width
+                this.input.push([i / this.WIDTH, j / this.WIDTH]);
             }
         }
         this.inputTensorXY = tf.tensor2d(this.input, [this.WIDTH * this.WIDTH, 2], 'float32');
@@ -102,10 +89,10 @@ class abstractANN {
 
     generateWeights() {
         // initialize random weights
-        this.w1 = tf.randomNormal([5, this.H]); // x, y + mouse.x, mouse.y + 1 temporal input
+        this.w1 = tf.randomNormal([5, this.H]);
         this.w2 = tf.randomNormal([this.H, this.H]);
         this.w3 = tf.randomNormal([this.H, this.H]);
-        this.w4 = tf.randomNormal([this.H, 3]); // 3 outputs (rgb)
+        this.w4 = tf.randomNormal([this.H, 3]);
     }
 
 
@@ -129,22 +116,19 @@ class abstractANN {
     }
 
 
-    ///////////////////////////////////////////////////////////////////
 
     genfixed() {
-        // console.log(this.HIDDENHEIGHT)
-        // console.log(this.numBatches)
         this.numBatches = 10;
         this.generateWeights()
-        this.magnitude1 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
-        this.magnitude2 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
-        this.magnitude3 = tf.scalar(`${randomint(100,620)/100}`, 'float32');
+        this.magnitude1 = tf.scalar(`${randomint(100, 620) / 100}`, 'float32');
+        this.magnitude2 = tf.scalar(`${randomint(100, 620) / 100}`, 'float32');
+        this.magnitude3 = tf.scalar(`${randomint(100, 620) / 100}`, 'float32');
 
         this.tMagnitude = tf.scalar(1.2);
         this.t = 0;
-        
-        this.mouseY = randomint(0,3200)/1000;
-        this.mouseX = randomint(0,3200)/1000;
+
+        this.mouseY = randomint(0, 3200) / 1000;
+        this.mouseX = randomint(0, 3200) / 1000;
 
         this.ACTIVATION = {
             'cos': (input) => input.cos(),
@@ -153,16 +137,15 @@ class abstractANN {
             'lin': (input) => input
         };
         var formular = ["sin", "cos", "tanh", "lin"];
-        this.activation1 = this.ACTIVATION[formular[randomint(0,3)]];
-        this.activation2 = this.ACTIVATION[formular[randomint(0,3)]];
-        this.activation3 = this.ACTIVATION[formular[randomint(0,3)]];
-        this.activation4 = this.ACTIVATION[formular[randomint(0,3)]];
+        this.activation1 = this.ACTIVATION[formular[randomint(0, 3)]];
+        this.activation2 = this.ACTIVATION[formular[randomint(0, 3)]];
+        this.activation3 = this.ACTIVATION[formular[randomint(0, 3)]];
+        this.activation4 = this.ACTIVATION[formular[randomint(0, 3)]];
 
 
     }
 
 
-    ////////////////////////////////////////////////////////////////////
 
     // Method to generate higher resolution wallpaper
     saveHighResFrame(name) {
@@ -171,9 +154,9 @@ class abstractANN {
         this.generateInputs();
         this.genfixed();
         console.log(this.height);
-        
 
-        // // generate matrix of all (x,y) combinations
+
+        // generate matrix of all (x,y) combinations
         for (let batch = 0; batch < this.HIDDENHEIGHT / this.numBatches; batch++) {
             let row = [];
             for (let i = 0; i < this.numBatches; i++) {
@@ -204,7 +187,6 @@ class abstractANN {
 
             let tempArray = outputRowRGB.dataSync();
             outputRowRGB.dispose();
-            // outputHighRes.push(...tempArray); // doesn't work on ipad (call stack issues)
             for (let i = 0; i < tempArray.length; i++) { outputHighRes.push(tempArray[i]); }
         }
 
@@ -214,9 +196,7 @@ class abstractANN {
 
 
 
-        // // display generated image as saveable thumbnail
-        // let image = document.createElement('img');
-        // var image = this.hiddenCanvas.toDataURL("image/jpeg");
+        // display generated image as saveable image
         const buffer = this.hiddenCanvas.toBuffer('image/png')
         fs.writeFileSync(`${name}`, buffer)
         // resume running
@@ -226,13 +206,14 @@ class abstractANN {
 
 }
 
+// ! Depreciated form of Image generation by style transfer 
 function paint(img, style) {
     (async function () {
         var resp = await deepai.callStandardApi("deepdream", {
             image: fs.createReadStream(`./${img}`),
         });
         //console.log(resp.output_url);
-       var url = resp.output_url;
+        var url = resp.output_url;
         (async function () {
             var resp = await deepai.callStandardApi("CNNMRF", {
                 content: url,
@@ -243,13 +224,4 @@ function paint(img, style) {
     })()
 }
 
-// cppn = new abstractANN({
-//     canvasID: 'canvas',
-//     height: 320,
-//     width: 240
-// });
-// // cppn.saveHighResFrame("cppn1");
-// // var url = "";
-
-// // paint("cppn1.png", "art_Style.png");
 module.exports = abstractANN;
