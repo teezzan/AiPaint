@@ -19,10 +19,10 @@ class abstractANN {
         this.WIDTH = 100;   // linear resolution
         this.H = 8;         // number of neurons in hidden layers
 
-        // mouse and trackpad input processing
+        // Original Implementation used mouse and trackpad input processing as a source of randomness
         this.mouseX = 0;
         this.mouseY = 0;
-        // attach mousemove and touch move events
+
         // input and weights
         this.input = [];
         this.inputTensorXY;
@@ -30,10 +30,8 @@ class abstractANN {
         this.t = 0;
         // temporal input steps (determines frequency)
         this.tSTEP = Math.PI / 800;
-        // temoral componenent magnitude
+        // temporal componenent magnitude
         this.tMagnitude = tf.scalar(1.2);
-        // layer magnitude
-        //this.lMagnitude = tf.scalar(1);
 
         // create hidden canvas to generate wallpaper and convert to image
         this.HIDDENWIDTH = height;
@@ -71,7 +69,7 @@ class abstractANN {
         this.activation3 = this.ACTIVATION[formular[randomint(0, 5)]];
         this.activation4 = this.ACTIVATION[formular[randomint(0, 5)]];
 
-        // run flag
+        // run flag is for video generation.
         this.runFlag = false;
 
     }
@@ -127,6 +125,7 @@ class abstractANN {
         this.tMagnitude = tf.scalar(1.2);
         this.t = 0;
 
+        //Simulate mouse movement by random Value.
         this.mouseY = randomint(0, 3200) / 1000;
         this.mouseX = randomint(0, 3200) / 1000;
 
@@ -194,9 +193,6 @@ class abstractANN {
         idata.data.set(Uint8ClampedArray.from(outputHighRes));
         this.ctx.putImageData(idata, 0, 0);
 
-
-
-        // display generated image as saveable image
         const buffer = this.hiddenCanvas.toBuffer('image/png')
         fs.writeFileSync(`${name}`, buffer)
         // resume running
@@ -206,13 +202,13 @@ class abstractANN {
 
 }
 
-// ! Depreciated form of Image generation by style transfer 
+// Just for Fun 
 function paint(img, style) {
     (async function () {
         var resp = await deepai.callStandardApi("deepdream", {
             image: fs.createReadStream(`./${img}`),
         });
-        //console.log(resp.output_url);
+
         var url = resp.output_url;
         (async function () {
             var resp = await deepai.callStandardApi("CNNMRF", {
