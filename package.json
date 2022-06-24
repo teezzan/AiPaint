@@ -19,7 +19,7 @@
     "deepai": "^1.0.15",
     "express": "^4.17.1",
     "graceful-fs": "^4.2.4",
-    "jsdom": "^16.2.2",
+    "jsdom": "^16.5.0",
     "node-telegram-bot-api": "^0.40.0",
     "request": "^2.88.2",
     "sulla": "^2.3.14"
